@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang='pt-BR'>
+<head>
+<meta charset='UTF-8'>
+<title>🏆 Dashboard Oficial - Bolão Copa 2026</title>
+<link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap' rel='stylesheet'>
+<style>
+body { font-family: 'Poppins', sans-serif; background-color: #f3f4f6; color: #1f2937; margin: 0; padding: 20px; }
+.container { max-width: 700px; margin: 0 auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+h1 { color: #1b365d; text-align: center; font-size: 28px; font-weight: 700; margin-bottom: 20px; }
+.search-box { width: 100%; padding: 12px; margin-bottom: 20px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+table { width: 100%; border-collapse: collapse; }
+th { background-color: #1b365d; color: white; padding: 14px; font-size: 14px; }
+td { padding: 14px; border-bottom: 1px solid #e5e7eb; font-size: 15px; }
+.top-three { background-color: #f0f4ff; }
+</style>
+</head>
+<body>
+<div class='container'>
+<h1>🏆 RANKING GERAL DO BOLÃO</h1>
+<input type='text' id='searchInput' class='search-box' onkeyup='filtrar()' placeholder='🔎 Buscar participante pelo nome...'>
+<table id='rankingTable'>
+<thead>
+<tr>
+<th style='text-align: center; width: 120px;'>Posição</th>
+<th style='text-align: left;'>Participante</th>
+<th style='text-align: center; width: 150px;'>Pontuação Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class='top-three'>
+<td style='text-align: center; font-weight: bold;'>🥇 1º</td>
+<td>Gabriel Queiroz</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>50 pts</td>
+</tr>
+<tr class='top-three'>
+<td style='text-align: center; font-weight: bold;'>🥈 2º</td>
+<td>Alessandra Couto</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>40 pts</td>
+</tr>
+<tr class='top-three'>
+<td style='text-align: center; font-weight: bold;'>🥉 3º</td>
+<td>Antonio Veiga</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>40 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>4º</td>
+<td>Arthur Mascarenhas</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>40 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>5º</td>
+<td>Victor Manshow</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>6º</td>
+<td>Kamila Nogueira</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>7º</td>
+<td>Alexandre Rosé</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>8º</td>
+<td>Sabrina Sobral</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>9º</td>
+<td>Marina Jordão</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>10º</td>
+<td>Baraldi</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>11º</td>
+<td>Claudio Laia</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>12º</td>
+<td>Rafael Manso</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>13º</td>
+<td>Felipe Balzana</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>14º</td>
+<td>João Thole</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>15º</td>
+<td>ALINE RODRIGUEZ BARBOSA</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>16º</td>
+<td>Pedro Lobo</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>17º</td>
+<td>Julio Vieira</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>18º</td>
+<td>Bruna Moreira</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>19º</td>
+<td>Carla Bastos</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>20º</td>
+<td>Guilherme Mattoso</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>21º</td>
+<td>Thiago Almeida</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>25 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>22º</td>
+<td>Eduardo Thole</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>15 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>23º</td>
+<td>Isaac Costa</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>15 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>24º</td>
+<td>Eduardo Marra</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>15 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>25º</td>
+<td>Marcelo Luis de F. Scalzitti</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>15 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>26º</td>
+<td>Carolina Moraes</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>15 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>27º</td>
+<td>Victor Molinari</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>15 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>28º</td>
+<td>Rodrigo Mota</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>15 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>29º</td>
+<td>Guilherme Ribas</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>15 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>30º</td>
+<td>Thiago Navega</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>15 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>31º</td>
+<td>Thamires Garcez</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>15 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>32º</td>
+<td>Rafael Waddington</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>15 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>33º</td>
+<td>Julia Baars Favilla Nunes</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>10 pts</td>
+</tr>
+<tr class=''>
+<td style='text-align: center; font-weight: bold;'>34º</td>
+<td>Vitor Passos</td>
+<td style='text-align: center; font-weight: bold; color: #1B365D;'>0 pts</td>
+</tr>
+</tbody>
+</table>
+</div>
+<script>
+function filtrar() {
+  var input = document.getElementById('searchInput').value.toUpperCase();
+  var tr = document.getElementById('rankingTable').getElementsByTagName('tr');
+  for (var i = 1; i < tr.length; i++) {
+    var td = tr[i].getElementsByTagName('td')[1];
+    if (td) tr[i].style.display = (td.textContent||td.innerText).toUpperCase().indexOf(input) > -1 ? '' : 'none';
+  }
+}
+</script>
+</body>
+</html>
