@@ -3,385 +3,198 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🏆 Bolão Copa 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<title>Bolão Copa 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Poppins', sans-serif; background: #f3f4f6; color: #1f2937; padding: 24px 16px; }
-  .container { max-width: 960px; margin: 0 auto; }
-  h1 { color: #1b365d; text-align: center; font-size: 26px; font-weight: 700; margin-bottom: 6px; }
-  .subtitle { text-align: center; color: #6b7280; font-size: 13px; margin-bottom: 20px; }
-  .search-box { width: 100%; padding: 11px 14px; margin-bottom: 18px; border: 2px solid #e5e7eb;
-                border-radius: 8px; font-size: 15px; font-family: inherit; outline: none; }
-  .search-box:focus { border-color: #1b365d; }
-  .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
-            margin-bottom: 18px; font-size: 12px; color: #4b5563; }
-  .legend span { display: flex; align-items: center; gap: 5px; }
-  table { width: 100%; border-collapse: collapse; background: white;
-          border-radius: 12px; overflow: hidden;
-          box-shadow: 0 4px 6px -1px rgba(0,0,0,0.08); }
-  thead tr { background: #1b365d; color: white; }
-  th { padding: 13px 12px; font-size: 12px; font-weight: 600; text-align: center;
-       letter-spacing: 0.03em; white-space: nowrap; }
-  th.left { text-align: left; }
-  td { padding: 12px; border-bottom: 1px solid #f0f0f0; font-size: 14px; text-align: center; }
-  td.left { text-align: left; font-weight: 500; }
-  tr.podio-1 { background: #fff8e1; }
-  tr.podio-2 { background: #f5f5f5; }
-  tr.podio-3 { background: #fff3e0; }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: #f0f4ff; }
-  .pts { font-weight: 700; color: #1b365d; font-size: 15px; }
-  .badge { display: inline-block; min-width: 28px; padding: 2px 6px;
-           border-radius: 999px; font-size: 12px; font-weight: 600; }
-  .badge-A { background: #dcfce7; color: #166534; }
-  .badge-B { background: #fef9c3; color: #854d0e; }
-  .badge-C { background: #dbeafe; color: #1e40af; }
-  .badge-D { background: #fee2e2; color: #991b1b; }
-  .pos { font-weight: 700; font-size: 15px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',sans-serif;background:#f3f4f6;color:#1f2937;padding:24px 16px}
+.container{max-width:1200px;margin:0 auto}
+h1{color:#1b365d;text-align:center;font-size:24px;font-weight:700;margin-bottom:4px}
+.sub{text-align:center;color:#6b7280;font-size:12px;margin-bottom:18px}
+.tabs{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.tab{padding:9px 26px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:2px solid #1b365d;background:white;color:#1b365d;transition:all .15s}
+.tab.active{background:#1b365d;color:white}
+.page{display:none}.page.active{display:block}
+.legend{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:14px;font-size:11px;color:#4b5563}
+.legend span{display:flex;align-items:center;gap:4px}
+.search-box{width:100%;padding:10px 14px;margin-bottom:14px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:14px;font-family:inherit;outline:none}
+.search-box:focus{border-color:#1b365d}
+.card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:#1b365d}
+th{padding:11px 10px;font-size:11px;font-weight:600;color:white;text-align:center;white-space:nowrap;letter-spacing:.03em}
+th.left{text-align:left}
+td{padding:10px;border-bottom:1px solid #f0f0f0;font-size:13px;text-align:center}
+td.left{text-align:left;font-weight:500}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#f8faff}
+tr.p1 td{background:#fff8e1}tr.p2 td{background:#f5f5f5}tr.p3 td{background:#fff3e0}
+.pts{font-weight:700;color:#1b365d}
+.badge{display:inline-block;min-width:26px;padding:2px 7px;border-radius:999px;font-size:11px;font-weight:600}
+.bA{background:#dcfce7;color:#166534}.bB{background:#fef9c3;color:#854d0e}
+.bC{background:#dbeafe;color:#1e40af}.bD{background:#fee2e2;color:#991b1b}
+
+/* TABELA PALPITES — jogos nas linhas, pessoas nas colunas */
+.pw{overflow-x:auto}
+#pt{min-width:600px;table-layout:auto}
+#pt thead th{white-space:nowrap;padding:10px 8px;font-size:11px}
+#pt thead th.nome-th{text-align:left;min-width:180px;position:sticky;left:0;z-index:3;background:#1b365d}
+#pt td.jogo-col{text-align:left;font-weight:500;font-size:11px;white-space:nowrap;padding:8px 12px;position:sticky;left:0;background:white;z-index:1;border-right:2px solid #e5e7eb;max-width:220px}
+#pt tr:hover td{background:#f8faff}
+#pt tr:hover td.jogo-col{background:#f8faff}
+#pt td.resultado-real{font-weight:700;color:#1b365d;background:#eef2ff;font-size:12px}
+.cA{background:#dcfce7;color:#166534;font-size:11px;font-weight:600;border-radius:4px;padding:2px 4px}
+.cB{background:#fef9c3;color:#854d0e;font-size:11px;font-weight:600;border-radius:4px;padding:2px 4px}
+.cC{background:#dbeafe;color:#1e40af;font-size:11px;font-weight:600;border-radius:4px;padding:2px 4px}
+.cD{background:#fee2e2;color:#991b1b;font-size:11px;font-weight:600;border-radius:4px;padding:2px 4px}
+.cX{color:#9ca3af;font-size:11px}
+.filtros{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.filtros select{padding:8px 12px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:13px;font-family:inherit;outline:none}
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>🏆 RANKING GERAL DO BOLÃO</h1>
-  <p class="subtitle">Copa do Mundo 2026</p>
-  <div class="legend">
-    <span><span class="badge badge-A">A</span> Placar exato — 25 pts</span>
-    <span><span class="badge badge-B">B</span> Vencedor + um gol — 15 pts</span>
-    <span><span class="badge badge-C">C</span> Apenas vencedor — 10 pts</span>
-    <span><span class="badge badge-D">D</span> Errou tudo — 0 pts</span>
+  <h1>🏆 Bolão Copa do Mundo 2026</h1>
+  <p class="sub">Atualizado automaticamente</p>
+  <div class="tabs">
+    <div class="tab active" onclick="showPage('ranking',this)">📊 Ranking</div>
+    <div class="tab" onclick="showPage('palpites',this)">🎯 Palpites</div>
   </div>
-  <input type="text" id="searchInput" class="search-box" onkeyup="filtrar()" placeholder="🔎 Buscar participante...">
-  <table id="rankingTable">
-    <thead>
-      <tr>
-        <th style="width:60px">POS</th>
-        <th class="left">PARTICIPANTE</th>
-        <th>PONTOS</th>
-        <th><span class="badge badge-A">A</span></th>
-        <th><span class="badge badge-B">B</span></th>
-        <th><span class="badge badge-C">C</span></th>
-        <th><span class="badge badge-D">D</span></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr class="podio-1">
-        <td class="pos">🥇</td>
-        <td class="left">Pedro Lobo</td>
-        <td class="pts">65 pts</td>
-        <td><span class="badge badge-A">2</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="podio-2">
-        <td class="pos">🥈</td>
-        <td class="left">Kamila Nogueira</td>
-        <td class="pts">65 pts</td>
-        <td><span class="badge badge-A">2</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="podio-3">
-        <td class="pos">🥉</td>
-        <td class="left">Sabrina Sobral</td>
-        <td class="pts">65 pts</td>
-        <td><span class="badge badge-A">2</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">4º</td>
-        <td class="left">Gabriel Queiroz</td>
-        <td class="pts">65 pts</td>
-        <td><span class="badge badge-A">2</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">5º</td>
-        <td class="left">Baraldi</td>
-        <td class="pts">60 pts</td>
-        <td><span class="badge badge-A">2</span></td>
-        <td><span class="badge badge-B">0</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">6º</td>
-        <td class="left">Victor Manso</td>
-        <td class="pts">60 pts</td>
-        <td><span class="badge badge-A">2</span></td>
-        <td><span class="badge badge-B">0</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">7º</td>
-        <td class="left">Thiago Almeida</td>
-        <td class="pts">60 pts</td>
-        <td><span class="badge badge-A">2</span></td>
-        <td><span class="badge badge-B">0</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">8º</td>
-        <td class="left">Thiago Navega</td>
-        <td class="pts">55 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">2</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">9º</td>
-        <td class="left">Antonio Veiga</td>
-        <td class="pts">55 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">2</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">10º</td>
-        <td class="left">Thamires Garcez</td>
-        <td class="pts">50 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">11º</td>
-        <td class="left">Alessandra Couto</td>
-        <td class="pts">50 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">12º</td>
-        <td class="left">Guilherme Mattoso</td>
-        <td class="pts">50 pts</td>
-        <td><span class="badge badge-A">2</span></td>
-        <td><span class="badge badge-B">0</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">13º</td>
-        <td class="left">Arthur Mascarenhas</td>
-        <td class="pts">50 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">1</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">14º</td>
-        <td class="left">Isaac Costa</td>
-        <td class="pts">40 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">15º</td>
-        <td class="left">Marcelo Luis de F. Scalzitti</td>
-        <td class="pts">40 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">16º</td>
-        <td class="left">ALINE RODRIGUEZ BARBOSA</td>
-        <td class="pts">40 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">17º</td>
-        <td class="left">Claudio Laia</td>
-        <td class="pts">40 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">18º</td>
-        <td class="left">Rafael Manso</td>
-        <td class="pts">40 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">19º</td>
-        <td class="left">Felipe Balzana</td>
-        <td class="pts">40 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">20º</td>
-        <td class="left">Bruna Moreira</td>
-        <td class="pts">40 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">21º</td>
-        <td class="left">Alexandre Rosé</td>
-        <td class="pts">35 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">0</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">22º</td>
-        <td class="left">Marina Jordão</td>
-        <td class="pts">35 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">0</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">23º</td>
-        <td class="left">Julia Baars Favilla Nunes</td>
-        <td class="pts">35 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">0</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">24º</td>
-        <td class="left">João Thole</td>
-        <td class="pts">35 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">0</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">25º</td>
-        <td class="left">Rafael Waddington</td>
-        <td class="pts">30 pts</td>
-        <td><span class="badge badge-A">0</span></td>
-        <td><span class="badge badge-B">2</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">26º</td>
-        <td class="left">Carolina Moraes</td>
-        <td class="pts">30 pts</td>
-        <td><span class="badge badge-A">0</span></td>
-        <td><span class="badge badge-B">2</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">27º</td>
-        <td class="left">Victor Molinari</td>
-        <td class="pts">30 pts</td>
-        <td><span class="badge badge-A">0</span></td>
-        <td><span class="badge badge-B">2</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">28º</td>
-        <td class="left">Eduardo Marra</td>
-        <td class="pts">30 pts</td>
-        <td><span class="badge badge-A">0</span></td>
-        <td><span class="badge badge-B">2</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">29º</td>
-        <td class="left">Carla Bastos</td>
-        <td class="pts">25 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">0</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">3</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">30º</td>
-        <td class="left">Eduardo Thole</td>
-        <td class="pts">25 pts</td>
-        <td><span class="badge badge-A">0</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">31º</td>
-        <td class="left">Julio Vieira</td>
-        <td class="pts">25 pts</td>
-        <td><span class="badge badge-A">1</span></td>
-        <td><span class="badge badge-B">0</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">3</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">32º</td>
-        <td class="left">Guilherme Ribas</td>
-        <td class="pts">25 pts</td>
-        <td><span class="badge badge-A">0</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">2</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">33º</td>
-        <td class="left">Rodrigo Mota</td>
-        <td class="pts">15 pts</td>
-        <td><span class="badge badge-A">0</span></td>
-        <td><span class="badge badge-B">1</span></td>
-        <td><span class="badge badge-C">0</span></td>
-        <td><span class="badge badge-D">3</span></td>
-      </tr>
-      <tr class="">
-        <td class="pos">34º</td>
-        <td class="left">Vitor Passos</td>
-        <td class="pts">10 pts</td>
-        <td><span class="badge badge-A">0</span></td>
-        <td><span class="badge badge-B">0</span></td>
-        <td><span class="badge badge-C">1</span></td>
-        <td><span class="badge badge-D">3</span></td>
-      </tr>
-    </tbody>
-  </table>
+
+  <!-- RANKING -->
+  <div id="page-ranking" class="page active">
+    <div class="legend">
+      <span><span class="badge bA">A</span>Placar exato — 25 pts</span>
+      <span><span class="badge bB">B</span>Vencedor + um gol — 15 pts</span>
+      <span><span class="badge bC">C</span>Apenas vencedor — 10 pts</span>
+      <span><span class="badge bD">D</span>Errou — 0 pts</span>
+    </div>
+    <input type="text" id="searchRanking" class="search-box" onkeyup="filtrarRanking()" placeholder="🔎 Buscar participante...">
+    <div class="card">
+      <table id="rankingTable">
+        <thead><tr>
+          <th style="width:52px">POS</th><th class="left">PARTICIPANTE</th>
+          <th>PONTOS</th>
+          <th><span class="badge bA">A</span></th>
+          <th><span class="badge bB">B</span></th>
+          <th><span class="badge bC">C</span></th>
+          <th><span class="badge bD">D</span></th>
+        </tr></thead>
+        <tbody id="rankingBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PALPITES -->
+  <div id="page-palpites" class="page">
+    <div class="filtros">
+      <select id="jogoFiltro" onchange="renderPalpites()">
+        <option value="disputados">Apenas jogos disputados</option>
+        <option value="todos">Todos os jogos (1–72)</option>
+      </select>
+      <input type="text" id="searchPalpites" class="search-box"
+             style="flex:1;min-width:180px;margin:0"
+             onkeyup="filtrarPalpites()" placeholder="🔎 Buscar participante...">
+    </div>
+    <div class="pw card">
+      <table id="pt">
+        <thead id="ptHead"></thead>
+        <tbody id="ptBody"></tbody>
+      </table>
+    </div>
+    <p style="font-size:11px;color:#9ca3af;margin-top:10px;text-align:center">
+      🟢 Placar exato &nbsp;|&nbsp; 🟡 Vencedor + gol &nbsp;|&nbsp; 🔵 Só vencedor &nbsp;|&nbsp; 🔴 Errou &nbsp;|&nbsp; — Não disputado
+    </p>
+  </div>
 </div>
+
 <script>
-function filtrar() {
-  var input = document.getElementById('searchInput').value.toUpperCase();
-  var tr = document.getElementById('rankingTable').getElementsByTagName('tr');
-  for (var i = 1; i < tr.length; i++) {
-    var td = tr[i].getElementsByTagName('td')[1];
-    if (td) tr[i].style.display = (td.textContent||td.innerText).toUpperCase().indexOf(input) > -1 ? '' : 'none';
+const JOGOS   = {"1": "México x África do Sul", "2": "Coreia do Sul x Rep. Tcheca", "3": "Canadá x Bósnia", "4": "Catar x Suíça", "5": "Brasil x Marrocos", "6": "Haiti x Escócia", "7": "Estados Unidos x Paraguai", "8": "Austrália x Turquia", "9": "Alemanha x Curaçao", "10": "Costa do Marfim x Equador", "11": "Holanda x Japão", "12": "Suécia x Tunísia", "13": "Bélgica x Egito", "14": "Irã x Nova Zelândia", "15": "Espanha x Cabo Verde", "16": "Arábia Saudita x Uruguai", "17": "França x Senegal", "18": "Iraque x Noruega", "19": "Argentina x Argélia", "20": "Áustria x Jordânia", "21": "Portugal x RD Congo", "22": "Uzbequistão x Colômbia", "23": "Inglaterra x Croácia", "24": "Gana x Panamá", "25": "Rep. Tcheca x África do Sul", "26": "México x Coreia do Sul", "27": "Suíça x Bósnia", "28": "Canadá x Catar", "29": "Escócia x Marrocos", "30": "Brasil x Haiti", "31": "Turquia x Paraguai", "32": "Estados Unidos x Austrália", "33": "Equador x Curaçao", "34": "Alemanha x Costa do Marfim", "35": "Tunísia x Japão", "36": "Holanda x Suécia", "37": "Nova Zelândia x Egito", "38": "Bélgica x Irã", "39": "Uruguai x Cabo Verde", "40": "Espanha x Arábia Saudita", "41": "Noruega x Senegal", "42": "França x Iraque", "43": "Jordânia x Argélia", "44": "Argentina x Áustria", "45": "Colômbia x RD Congo", "46": "Portugal x Uzbequistão", "47": "Panamá x Croácia", "48": "Inglaterra x Gana", "49": "África do Sul x Coreia do Sul", "50": "Rep. Tcheca x México", "51": "Suíça x Canadá", "52": "Bósnia x Catar", "53": "Marrocos x Haiti", "54": "Escócia x Brasil", "55": "Paraguai x Austrália", "56": "Turquia x Estados Unidos", "57": "Curaçao x Costa do Marfim", "58": "Equador x Alemanha", "59": "Japão x Suécia", "60": "Tunísia x Holanda", "61": "Egito x Irã", "62": "Nova Zelândia x Bélgica", "63": "Cabo Verde x Arábia Saudita", "64": "Uruguai x Espanha", "65": "Senegal x Iraque", "66": "Noruega x França", "67": "Argélia x Áustria", "68": "Jordânia x Argentina", "69": "RD Congo x Uzbequistão", "70": "Colômbia x Portugal", "71": "Croácia x Gana", "72": "Panamá x Inglaterra"};
+const GABARITO= {"1": "2-0", "2": "2-1", "3": "1-1", "4": null, "5": null, "6": null, "7": "4-1", "8": null, "9": null, "10": null, "11": null, "12": null, "13": null, "14": null, "15": null, "16": null, "17": null, "18": null, "19": null, "20": null, "21": null, "22": null, "23": null, "24": null, "25": null, "26": null, "27": null, "28": null, "29": null, "30": null, "31": null, "32": null, "33": null, "34": null, "35": null, "36": null, "37": null, "38": null, "39": null, "40": null, "41": null, "42": null, "43": null, "44": null, "45": null, "46": null, "47": null, "48": null, "49": null, "50": null, "51": null, "52": null, "53": null, "54": null, "55": null, "56": null, "57": null, "58": null, "59": null, "60": null, "61": null, "62": null, "63": null, "64": null, "65": null, "66": null, "67": null, "68": null, "69": null, "70": null, "71": null, "72": null};
+const PALPITES= {"Alessandra Couto": {"1": {"p": "2-1", "cat": "B"}, "2": {"p": "2-1", "cat": "A"}, "3": {"p": "1-0", "cat": "D"}, "4": {"p": "1-1", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-0", "cat": "C"}, "8": {"p": "1-3", "cat": "-"}, "9": {"p": "5-0", "cat": "-"}, "10": {"p": "3-2", "cat": "-"}, "11": {"p": "3-2", "cat": "-"}, "12": {"p": "2-1", "cat": "-"}, "13": {"p": "2-0", "cat": "-"}, "14": {"p": "1-0", "cat": "-"}, "15": {"p": "4-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "2-1", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "1-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "3-1", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "2-2", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "1-1", "cat": "-"}, "29": {"p": "0-1", "cat": "-"}, "30": {"p": "3-0", "cat": "-"}, "31": {"p": "2-0", "cat": "-"}, "32": {"p": "3-2", "cat": "-"}, "33": {"p": "4-0", "cat": "-"}, "34": {"p": "3-1", "cat": "-"}, "35": {"p": "1-3", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "2-2", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "3-0", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "2-2", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "0-2", "cat": "-"}, "44": {"p": "2-0", "cat": "-"}, "45": {"p": "3-0", "cat": "-"}, "46": {"p": "5-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "3-1", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "1-2", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "0-1", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "2-2", "cat": "-"}, "56": {"p": "1-1", "cat": "-"}, "57": {"p": "0-3", "cat": "-"}, "58": {"p": "1-3", "cat": "-"}, "59": {"p": "2-2", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "0-2", "cat": "-"}, "64": {"p": "1-2", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-3", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-4", "cat": "-"}, "69": {"p": "1-0", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "2-2", "cat": "-"}, "72": {"p": "0-4", "cat": "-"}}, "ALINE RODRIGUEZ BARBOSA": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "2-0", "cat": "D"}, "4": {"p": "0-3", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "3-1", "cat": "B"}, "8": {"p": "0-1", "cat": "-"}, "9": {"p": "5-0", "cat": "-"}, "10": {"p": "2-2", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "3-1", "cat": "-"}, "14": {"p": "2-1", "cat": "-"}, "15": {"p": "5-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "2-0", "cat": "-"}, "18": {"p": "0-3", "cat": "-"}, "19": {"p": "3-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "1-0", "cat": "-"}, "25": {"p": "2-1", "cat": "-"}, "26": {"p": "2-2", "cat": "-"}, "27": {"p": "4-1", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "1-2", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "1-0", "cat": "-"}, "32": {"p": "2-0", "cat": "-"}, "33": {"p": "3-0", "cat": "-"}, "34": {"p": "3-1", "cat": "-"}, "35": {"p": "0-2", "cat": "-"}, "36": {"p": "2-0", "cat": "-"}, "37": {"p": "1-2", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "3-1", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "4-0", "cat": "-"}, "43": {"p": "1-2", "cat": "-"}, "44": {"p": "2-0", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "0-1", "cat": "-"}, "48": {"p": "2-1", "cat": "-"}, "49": {"p": "0-2", "cat": "-"}, "50": {"p": "1-2", "cat": "-"}, "51": {"p": "2-0", "cat": "-"}, "52": {"p": "2-0", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "2-1", "cat": "-"}, "56": {"p": "2-2", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "1-2", "cat": "-"}, "59": {"p": "1-1", "cat": "-"}, "60": {"p": "1-3", "cat": "-"}, "61": {"p": "1-0", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "0-2", "cat": "-"}, "64": {"p": "1-3", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-3", "cat": "-"}, "67": {"p": "1-2", "cat": "-"}, "68": {"p": "0-4", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "1-0", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Antonio Veiga": {"1": {"p": "2-1", "cat": "B"}, "2": {"p": "2-1", "cat": "A"}, "3": {"p": "2-1", "cat": "D"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "1-1", "cat": "-"}, "9": {"p": "3-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-1", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "2-0", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "0-1", "cat": "-"}, "17": {"p": "2-1", "cat": "-"}, "18": {"p": "0-1", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "1-0", "cat": "-"}, "21": {"p": "2-0", "cat": "-"}, "22": {"p": "0-1", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "1-0", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "2-1", "cat": "-"}, "29": {"p": "1-0", "cat": "-"}, "30": {"p": "3-0", "cat": "-"}, "31": {"p": "2-1", "cat": "-"}, "32": {"p": "1-0", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "2-0", "cat": "-"}, "35": {"p": "0-1", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "1-2", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "3-1", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "2-0", "cat": "-"}, "43": {"p": "0-2", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "1-2", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "2-0", "cat": "-"}, "53": {"p": "1-0", "cat": "-"}, "54": {"p": "0-1", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "0-2", "cat": "-"}, "57": {"p": "0-1", "cat": "-"}, "58": {"p": "1-2", "cat": "-"}, "59": {"p": "0-0", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "0-1", "cat": "-"}, "64": {"p": "1-2", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "0-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "1-0", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "1-1", "cat": "-"}, "72": {"p": "1-2", "cat": "-"}}, "Bruna Moreira": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "3-0", "cat": "D"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "1-1", "cat": "-"}, "6": {"p": "0-3", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "1-1", "cat": "-"}, "9": {"p": "4-0", "cat": "-"}, "10": {"p": "1-2", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "2-0", "cat": "-"}, "13": {"p": "1-1", "cat": "-"}, "14": {"p": "1-1", "cat": "-"}, "15": {"p": "4-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "2-0", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "3-1", "cat": "-"}, "20": {"p": "2-1", "cat": "-"}, "21": {"p": "4-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "1-1", "cat": "-"}, "24": {"p": "2-0", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "2-0", "cat": "-"}, "28": {"p": "3-0", "cat": "-"}, "29": {"p": "1-2", "cat": "-"}, "30": {"p": "5-1", "cat": "-"}, "31": {"p": "1-0", "cat": "-"}, "32": {"p": "1-0", "cat": "-"}, "33": {"p": "2-1", "cat": "-"}, "34": {"p": "2-0", "cat": "-"}, "35": {"p": "0-1", "cat": "-"}, "36": {"p": "1-1", "cat": "-"}, "37": {"p": "0-1", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "3-1", "cat": "-"}, "40": {"p": "4-1", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "0-2", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "1-2", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "1-3", "cat": "-"}, "50": {"p": "1-2", "cat": "-"}, "51": {"p": "1-2", "cat": "-"}, "52": {"p": "2-2", "cat": "-"}, "53": {"p": "4-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "0-2", "cat": "-"}, "56": {"p": "1-1", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "1-2", "cat": "-"}, "59": {"p": "1-1", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "2-0", "cat": "-"}, "62": {"p": "0-2", "cat": "-"}, "63": {"p": "2-1", "cat": "-"}, "64": {"p": "1-2", "cat": "-"}, "65": {"p": "2-1", "cat": "-"}, "66": {"p": "0-2", "cat": "-"}, "67": {"p": "1-2", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "2-2", "cat": "-"}, "70": {"p": "1-1", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "1-3", "cat": "-"}}, "Carla Bastos": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "2-1", "cat": "D"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "1-2", "cat": "D"}, "8": {"p": "0-2", "cat": "-"}, "9": {"p": "4-0", "cat": "-"}, "10": {"p": "1-2", "cat": "-"}, "11": {"p": "3-2", "cat": "-"}, "12": {"p": "1-1", "cat": "-"}, "13": {"p": "3-1", "cat": "-"}, "14": {"p": "2-0", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "3-1", "cat": "-"}, "18": {"p": "1-3", "cat": "-"}, "19": {"p": "3-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "1-2", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "2-0", "cat": "-"}, "25": {"p": "2-0", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "1-0", "cat": "-"}, "29": {"p": "1-1", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "2-0", "cat": "-"}, "32": {"p": "2-0", "cat": "-"}, "33": {"p": "3-0", "cat": "-"}, "34": {"p": "2-0", "cat": "-"}, "35": {"p": "0-2", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "1-1", "cat": "-"}, "38": {"p": "2-1", "cat": "-"}, "39": {"p": "3-1", "cat": "-"}, "40": {"p": "2-0", "cat": "-"}, "41": {"p": "2-2", "cat": "-"}, "42": {"p": "4-0", "cat": "-"}, "43": {"p": "1-1", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "3-1", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "1-2", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "2-0", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "1-0", "cat": "-"}, "56": {"p": "2-1", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "2-3", "cat": "-"}, "59": {"p": "1-1", "cat": "-"}, "60": {"p": "0-3", "cat": "-"}, "61": {"p": "0-0", "cat": "-"}, "62": {"p": "0-4", "cat": "-"}, "63": {"p": "0-0", "cat": "-"}, "64": {"p": "1-1", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-3", "cat": "-"}, "67": {"p": "0-1", "cat": "-"}, "68": {"p": "0-5", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "2-1", "cat": "-"}, "71": {"p": "1-1", "cat": "-"}, "72": {"p": "0-4", "cat": "-"}}, "Carolina Moraes": {"1": {"p": "2-1", "cat": "B"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "2-0", "cat": "D"}, "4": {"p": "1-3", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "1-3", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "2-2", "cat": "-"}, "9": {"p": "5-0", "cat": "-"}, "10": {"p": "1-2", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "2-2", "cat": "-"}, "13": {"p": "1-1", "cat": "-"}, "14": {"p": "2-0", "cat": "-"}, "15": {"p": "5-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "3-1", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "2-1", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-2", "cat": "-"}, "24": {"p": "1-1", "cat": "-"}, "25": {"p": "2-0", "cat": "-"}, "26": {"p": "2-2", "cat": "-"}, "27": {"p": "3-0", "cat": "-"}, "28": {"p": "2-1", "cat": "-"}, "29": {"p": "1-3", "cat": "-"}, "30": {"p": "5-1", "cat": "-"}, "31": {"p": "2-1", "cat": "-"}, "32": {"p": "3-1", "cat": "-"}, "33": {"p": "3-1", "cat": "-"}, "34": {"p": "4-1", "cat": "-"}, "35": {"p": "0-1", "cat": "-"}, "36": {"p": "2-0", "cat": "-"}, "37": {"p": "1-3", "cat": "-"}, "38": {"p": "2-1", "cat": "-"}, "39": {"p": "4-1", "cat": "-"}, "40": {"p": "3-1", "cat": "-"}, "41": {"p": "3-1", "cat": "-"}, "42": {"p": "4-0", "cat": "-"}, "43": {"p": "1-1", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "3-1", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "1-2", "cat": "-"}, "48": {"p": "3-1", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "2-2", "cat": "-"}, "52": {"p": "2-1", "cat": "-"}, "53": {"p": "4-0", "cat": "-"}, "54": {"p": "1-3", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "3-2", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "0-3", "cat": "-"}, "59": {"p": "2-2", "cat": "-"}, "60": {"p": "1-3", "cat": "-"}, "61": {"p": "2-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-2", "cat": "-"}, "64": {"p": "2-3", "cat": "-"}, "65": {"p": "2-2", "cat": "-"}, "66": {"p": "2-3", "cat": "-"}, "67": {"p": "0-1", "cat": "-"}, "68": {"p": "1-3", "cat": "-"}, "69": {"p": "1-2", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "3-1", "cat": "-"}, "72": {"p": "1-2", "cat": "-"}}, "Eduardo Thole": {"1": {"p": "2-1", "cat": "B"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "2-0", "cat": "D"}, "4": {"p": "0-3", "cat": "-"}, "5": {"p": "1-0", "cat": "-"}, "6": {"p": "0-3", "cat": "-"}, "7": {"p": "2-0", "cat": "C"}, "8": {"p": "0-1", "cat": "-"}, "9": {"p": "4-0", "cat": "-"}, "10": {"p": "2-2", "cat": "-"}, "11": {"p": "2-2", "cat": "-"}, "12": {"p": "3-1", "cat": "-"}, "13": {"p": "2-0", "cat": "-"}, "14": {"p": "1-0", "cat": "-"}, "15": {"p": "5-1", "cat": "-"}, "16": {"p": "1-2", "cat": "-"}, "17": {"p": "1-0", "cat": "-"}, "18": {"p": "1-4", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "4-0", "cat": "-"}, "22": {"p": "1-3", "cat": "-"}, "23": {"p": "1-0", "cat": "-"}, "24": {"p": "2-1", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "1-0", "cat": "-"}, "28": {"p": "3-0", "cat": "-"}, "29": {"p": "1-1", "cat": "-"}, "30": {"p": "5-0", "cat": "-"}, "31": {"p": "2-0", "cat": "-"}, "32": {"p": "3-1", "cat": "-"}, "33": {"p": "3-0", "cat": "-"}, "34": {"p": "3-1", "cat": "-"}, "35": {"p": "1-2", "cat": "-"}, "36": {"p": "1-0", "cat": "-"}, "37": {"p": "0-1", "cat": "-"}, "38": {"p": "2-1", "cat": "-"}, "39": {"p": "3-0", "cat": "-"}, "40": {"p": "3-1", "cat": "-"}, "41": {"p": "2-2", "cat": "-"}, "42": {"p": "4-0", "cat": "-"}, "43": {"p": "0-2", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "1-2", "cat": "-"}, "48": {"p": "1-0", "cat": "-"}, "49": {"p": "0-1", "cat": "-"}, "50": {"p": "1-2", "cat": "-"}, "51": {"p": "0-0", "cat": "-"}, "52": {"p": "2-1", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "1-3", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "1-1", "cat": "-"}, "57": {"p": "0-3", "cat": "-"}, "58": {"p": "1-2", "cat": "-"}, "59": {"p": "1-1", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "2-2", "cat": "-"}, "62": {"p": "0-2", "cat": "-"}, "63": {"p": "0-1", "cat": "-"}, "64": {"p": "1-2", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-1", "cat": "-"}, "67": {"p": "0-0", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "2-2", "cat": "-"}, "71": {"p": "1-1", "cat": "-"}, "72": {"p": "0-2", "cat": "-"}}, "Gabriel Queiroz": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "2-1", "cat": "A"}, "3": {"p": "2-0", "cat": "D"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "0-2", "cat": "-"}, "9": {"p": "5-0", "cat": "-"}, "10": {"p": "0-0", "cat": "-"}, "11": {"p": "2-2", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "2-0", "cat": "-"}, "14": {"p": "0-0", "cat": "-"}, "15": {"p": "5-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "2-1", "cat": "-"}, "18": {"p": "1-2", "cat": "-"}, "19": {"p": "1-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-1", "cat": "-"}, "23": {"p": "1-1", "cat": "-"}, "24": {"p": "1-2", "cat": "-"}, "25": {"p": "2-1", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "3-0", "cat": "-"}, "29": {"p": "1-1", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "3-1", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "3-2", "cat": "-"}, "35": {"p": "0-2", "cat": "-"}, "36": {"p": "3-2", "cat": "-"}, "37": {"p": "1-2", "cat": "-"}, "38": {"p": "2-1", "cat": "-"}, "39": {"p": "3-0", "cat": "-"}, "40": {"p": "2-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "1-1", "cat": "-"}, "44": {"p": "2-2", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "4-1", "cat": "-"}, "47": {"p": "1-2", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "0-2", "cat": "-"}, "50": {"p": "1-2", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "1-0", "cat": "-"}, "53": {"p": "2-0", "cat": "-"}, "54": {"p": "0-1", "cat": "-"}, "55": {"p": "3-2", "cat": "-"}, "56": {"p": "2-1", "cat": "-"}, "57": {"p": "1-3", "cat": "-"}, "58": {"p": "1-1", "cat": "-"}, "59": {"p": "2-1", "cat": "-"}, "60": {"p": "0-3", "cat": "-"}, "61": {"p": "2-2", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "2-1", "cat": "-"}, "64": {"p": "0-1", "cat": "-"}, "65": {"p": "1-0", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-2", "cat": "-"}, "68": {"p": "1-3", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "3-1", "cat": "-"}, "72": {"p": "1-2", "cat": "-"}}, "Julio Vieira": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "1-0", "cat": "D"}, "4": {"p": "0-3", "cat": "-"}, "5": {"p": "1-1", "cat": "-"}, "6": {"p": "1-3", "cat": "-"}, "7": {"p": "1-1", "cat": "D"}, "8": {"p": "1-3", "cat": "-"}, "9": {"p": "5-0", "cat": "-"}, "10": {"p": "0-2", "cat": "-"}, "11": {"p": "1-1", "cat": "-"}, "12": {"p": "2-1", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "1-1", "cat": "-"}, "15": {"p": "4-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "3-1", "cat": "-"}, "18": {"p": "0-4", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "3-1", "cat": "-"}, "21": {"p": "2-0", "cat": "-"}, "22": {"p": "1-3", "cat": "-"}, "23": {"p": "1-0", "cat": "-"}, "24": {"p": "1-2", "cat": "-"}, "25": {"p": "2-1", "cat": "-"}, "26": {"p": "1-0", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "0-1", "cat": "-"}, "30": {"p": "5-0", "cat": "-"}, "31": {"p": "2-1", "cat": "-"}, "32": {"p": "2-1", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "3-1", "cat": "-"}, "35": {"p": "0-2", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "0-2", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "2-1", "cat": "-"}, "42": {"p": "4-1", "cat": "-"}, "43": {"p": "0-1", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-1", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "1-2", "cat": "-"}, "48": {"p": "3-0", "cat": "-"}, "49": {"p": "1-1", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "2-1", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "1-0", "cat": "-"}, "56": {"p": "2-1", "cat": "-"}, "57": {"p": "1-3", "cat": "-"}, "58": {"p": "1-1", "cat": "-"}, "59": {"p": "1-0", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "2-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-0", "cat": "-"}, "64": {"p": "0-1", "cat": "-"}, "65": {"p": "3-1", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "1-0", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-2", "cat": "-"}}, "Arthur Mascarenhas": {"1": {"p": "1-0", "cat": "B"}, "2": {"p": "2-1", "cat": "A"}, "3": {"p": "1-0", "cat": "D"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "1-0", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "1-0", "cat": "C"}, "8": {"p": "0-1", "cat": "-"}, "9": {"p": "3-0", "cat": "-"}, "10": {"p": "0-1", "cat": "-"}, "11": {"p": "1-0", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "1-0", "cat": "-"}, "14": {"p": "1-0", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "2-0", "cat": "-"}, "18": {"p": "0-1", "cat": "-"}, "19": {"p": "1-0", "cat": "-"}, "20": {"p": "1-0", "cat": "-"}, "21": {"p": "2-0", "cat": "-"}, "22": {"p": "0-1", "cat": "-"}, "23": {"p": "1-0", "cat": "-"}, "24": {"p": "1-0", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "1-0", "cat": "-"}, "27": {"p": "1-0", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "0-1", "cat": "-"}, "30": {"p": "2-0", "cat": "-"}, "31": {"p": "1-0", "cat": "-"}, "32": {"p": "1-0", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "1-0", "cat": "-"}, "35": {"p": "0-1", "cat": "-"}, "36": {"p": "1-0", "cat": "-"}, "37": {"p": "0-1", "cat": "-"}, "38": {"p": "1-0", "cat": "-"}, "39": {"p": "1-0", "cat": "-"}, "40": {"p": "2-0", "cat": "-"}, "41": {"p": "1-0", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "0-1", "cat": "-"}, "44": {"p": "1-0", "cat": "-"}, "45": {"p": "1-0", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "0-1", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "0-1", "cat": "-"}, "50": {"p": "0-1", "cat": "-"}, "51": {"p": "1-0", "cat": "-"}, "52": {"p": "1-0", "cat": "-"}, "53": {"p": "2-0", "cat": "-"}, "54": {"p": "0-1", "cat": "-"}, "55": {"p": "1-0", "cat": "-"}, "56": {"p": "1-0", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "0-1", "cat": "-"}, "59": {"p": "1-0", "cat": "-"}, "60": {"p": "0-1", "cat": "-"}, "61": {"p": "1-0", "cat": "-"}, "62": {"p": "0-2", "cat": "-"}, "63": {"p": "1-0", "cat": "-"}, "64": {"p": "0-1", "cat": "-"}, "65": {"p": "1-0", "cat": "-"}, "66": {"p": "0-1", "cat": "-"}, "67": {"p": "0-1", "cat": "-"}, "68": {"p": "0-2", "cat": "-"}, "69": {"p": "1-0", "cat": "-"}, "70": {"p": "0-1", "cat": "-"}, "71": {"p": "1-0", "cat": "-"}, "72": {"p": "0-1", "cat": "-"}}, "Guilherme Mattoso": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-0", "cat": "-"}, "7": {"p": "1-1", "cat": "D"}, "8": {"p": "0-0", "cat": "-"}, "9": {"p": "4-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "1-1", "cat": "-"}, "12": {"p": "2-0", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "1-0", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "0-1", "cat": "-"}, "17": {"p": "2-0", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "2-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "1-1", "cat": "-"}, "24": {"p": "2-1", "cat": "-"}, "25": {"p": "0-1", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "2-0", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "0-2", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "2-0", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "2-0", "cat": "-"}, "35": {"p": "1-1", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "0-2", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "2-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "0-2", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "0-1", "cat": "-"}, "50": {"p": "0-2", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "1-0", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "0-3", "cat": "-"}, "55": {"p": "1-0", "cat": "-"}, "56": {"p": "2-1", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "1-1", "cat": "-"}, "59": {"p": "0-1", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "1-1", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "1-1", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Rodrigo Mota": {"1": {"p": "2-1", "cat": "B"}, "2": {"p": "1-2", "cat": "D"}, "3": {"p": "1-0", "cat": "D"}, "4": {"p": "0-1", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "1-2", "cat": "-"}, "7": {"p": "2-2", "cat": "D"}, "8": {"p": "1-2", "cat": "-"}, "9": {"p": "4-0", "cat": "-"}, "10": {"p": "1-2", "cat": "-"}, "11": {"p": "3-1", "cat": "-"}, "12": {"p": "2-2", "cat": "-"}, "13": {"p": "3-0", "cat": "-"}, "14": {"p": "2-1", "cat": "-"}, "15": {"p": "5-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "4-0", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "4-0", "cat": "-"}, "20": {"p": "2-1", "cat": "-"}, "21": {"p": "4-0", "cat": "-"}, "22": {"p": "0-3", "cat": "-"}, "23": {"p": "2-2", "cat": "-"}, "24": {"p": "3-1", "cat": "-"}, "25": {"p": "2-2", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "2-0", "cat": "-"}, "28": {"p": "2-1", "cat": "-"}, "29": {"p": "1-2", "cat": "-"}, "30": {"p": "3-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "2-0", "cat": "-"}, "33": {"p": "3-0", "cat": "-"}, "34": {"p": "3-1", "cat": "-"}, "35": {"p": "1-1", "cat": "-"}, "36": {"p": "2-0", "cat": "-"}, "37": {"p": "1-1", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "3-1", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "4-0", "cat": "-"}, "43": {"p": "0-0", "cat": "-"}, "44": {"p": "3-0", "cat": "-"}, "45": {"p": "3-1", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "0-3", "cat": "-"}, "48": {"p": "3-1", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "2-2", "cat": "-"}, "51": {"p": "2-2", "cat": "-"}, "52": {"p": "2-2", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "1-2", "cat": "-"}, "55": {"p": "2-1", "cat": "-"}, "56": {"p": "1-2", "cat": "-"}, "57": {"p": "1-2", "cat": "-"}, "58": {"p": "1-3", "cat": "-"}, "59": {"p": "2-1", "cat": "-"}, "60": {"p": "1-2", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-2", "cat": "-"}, "64": {"p": "2-2", "cat": "-"}, "65": {"p": "1-1", "cat": "-"}, "66": {"p": "1-3", "cat": "-"}, "67": {"p": "2-2", "cat": "-"}, "68": {"p": "0-4", "cat": "-"}, "69": {"p": "2-2", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Thiago Navega": {"1": {"p": "2-1", "cat": "B"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "1-2", "cat": "-"}, "5": {"p": "1-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "2-1", "cat": "-"}, "9": {"p": "3-0", "cat": "-"}, "10": {"p": "1-2", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "2-1", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "1-0", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "1-2", "cat": "-"}, "17": {"p": "2-2", "cat": "-"}, "18": {"p": "1-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "1-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-2", "cat": "-"}, "24": {"p": "0-1", "cat": "-"}, "25": {"p": "1-1", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "1-1", "cat": "-"}, "28": {"p": "2-1", "cat": "-"}, "29": {"p": "1-1", "cat": "-"}, "30": {"p": "3-0", "cat": "-"}, "31": {"p": "2-1", "cat": "-"}, "32": {"p": "1-1", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "2-1", "cat": "-"}, "35": {"p": "1-2", "cat": "-"}, "36": {"p": "1-1", "cat": "-"}, "37": {"p": "0-2", "cat": "-"}, "38": {"p": "2-2", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "2-0", "cat": "-"}, "41": {"p": "2-2", "cat": "-"}, "42": {"p": "2-0", "cat": "-"}, "43": {"p": "1-2", "cat": "-"}, "44": {"p": "2-2", "cat": "-"}, "45": {"p": "3-0", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "2-1", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "0-1", "cat": "-"}, "52": {"p": "1-2", "cat": "-"}, "53": {"p": "2-0", "cat": "-"}, "54": {"p": "1-2", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "1-1", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "2-1", "cat": "-"}, "59": {"p": "1-0", "cat": "-"}, "60": {"p": "1-2", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "1-3", "cat": "-"}, "63": {"p": "0-1", "cat": "-"}, "64": {"p": "1-1", "cat": "-"}, "65": {"p": "2-1", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-0", "cat": "-"}, "68": {"p": "0-2", "cat": "-"}, "69": {"p": "0-2", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "1-0", "cat": "-"}, "72": {"p": "1-2", "cat": "-"}}, "Thamires Garcez": {"1": {"p": "3-0", "cat": "B"}, "2": {"p": "1-2", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-3", "cat": "-"}, "7": {"p": "1-0", "cat": "C"}, "8": {"p": "0-2", "cat": "-"}, "9": {"p": "6-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "2-2", "cat": "-"}, "12": {"p": "2-0", "cat": "-"}, "13": {"p": "3-0", "cat": "-"}, "14": {"p": "2-1", "cat": "-"}, "15": {"p": "5-0", "cat": "-"}, "16": {"p": "1-1", "cat": "-"}, "17": {"p": "3-1", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-1", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "2-0", "cat": "-"}, "22": {"p": "1-3", "cat": "-"}, "23": {"p": "2-2", "cat": "-"}, "24": {"p": "3-2", "cat": "-"}, "25": {"p": "2-1", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "0-0", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "1-3", "cat": "-"}, "30": {"p": "5-0", "cat": "-"}, "31": {"p": "2-1", "cat": "-"}, "32": {"p": "3-1", "cat": "-"}, "33": {"p": "3-0", "cat": "-"}, "34": {"p": "3-1", "cat": "-"}, "35": {"p": "1-3", "cat": "-"}, "36": {"p": "2-0", "cat": "-"}, "37": {"p": "0-3", "cat": "-"}, "38": {"p": "3-0", "cat": "-"}, "39": {"p": "3-0", "cat": "-"}, "40": {"p": "4-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "4-0", "cat": "-"}, "43": {"p": "0-2", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "3-1", "cat": "-"}, "47": {"p": "0-3", "cat": "-"}, "48": {"p": "2-1", "cat": "-"}, "49": {"p": "0-1", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "2-1", "cat": "-"}, "52": {"p": "2-0", "cat": "-"}, "53": {"p": "4-0", "cat": "-"}, "54": {"p": "0-3", "cat": "-"}, "55": {"p": "2-1", "cat": "-"}, "56": {"p": "2-2", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "0-2", "cat": "-"}, "59": {"p": "3-2", "cat": "-"}, "60": {"p": "1-4", "cat": "-"}, "61": {"p": "2-0", "cat": "-"}, "62": {"p": "0-6", "cat": "-"}, "63": {"p": "0-2", "cat": "-"}, "64": {"p": "0-2", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "0-1", "cat": "-"}, "67": {"p": "1-3", "cat": "-"}, "68": {"p": "0-4", "cat": "-"}, "69": {"p": "2-2", "cat": "-"}, "70": {"p": "2-3", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Thiago Almeida": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "0-1", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-1", "cat": "-"}, "7": {"p": "1-0", "cat": "C"}, "8": {"p": "0-1", "cat": "-"}, "9": {"p": "3-0", "cat": "-"}, "10": {"p": "2-2", "cat": "-"}, "11": {"p": "1-1", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "1-0", "cat": "-"}, "14": {"p": "1-1", "cat": "-"}, "15": {"p": "2-0", "cat": "-"}, "16": {"p": "0-1", "cat": "-"}, "17": {"p": "1-0", "cat": "-"}, "18": {"p": "0-1", "cat": "-"}, "19": {"p": "1-0", "cat": "-"}, "20": {"p": "1-0", "cat": "-"}, "21": {"p": "2-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "1-1", "cat": "-"}, "24": {"p": "2-1", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "0-0", "cat": "-"}, "27": {"p": "1-0", "cat": "-"}, "28": {"p": "1-1", "cat": "-"}, "29": {"p": "0-2", "cat": "-"}, "30": {"p": "2-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "1-0", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "2-1", "cat": "-"}, "35": {"p": "0-1", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "0-0", "cat": "-"}, "38": {"p": "1-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "1-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "1-0", "cat": "-"}, "43": {"p": "1-1", "cat": "-"}, "44": {"p": "2-0", "cat": "-"}, "45": {"p": "2-1", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "0-1", "cat": "-"}, "48": {"p": "1-0", "cat": "-"}, "49": {"p": "0-2", "cat": "-"}, "50": {"p": "0-1", "cat": "-"}, "51": {"p": "1-0", "cat": "-"}, "52": {"p": "0-0", "cat": "-"}, "53": {"p": "1-0", "cat": "-"}, "54": {"p": "0-1", "cat": "-"}, "55": {"p": "1-0", "cat": "-"}, "56": {"p": "1-1", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "1-2", "cat": "-"}, "59": {"p": "1-0", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-0", "cat": "-"}, "62": {"p": "1-2", "cat": "-"}, "63": {"p": "0-1", "cat": "-"}, "64": {"p": "1-1", "cat": "-"}, "65": {"p": "1-0", "cat": "-"}, "66": {"p": "0-1", "cat": "-"}, "67": {"p": "1-0", "cat": "-"}, "68": {"p": "0-2", "cat": "-"}, "69": {"p": "0-0", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "1-0", "cat": "-"}, "72": {"p": "0-1", "cat": "-"}}, "Victor Manso": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "0-3", "cat": "-"}, "5": {"p": "1-0", "cat": "-"}, "6": {"p": "1-3", "cat": "-"}, "7": {"p": "2-0", "cat": "C"}, "8": {"p": "0-1", "cat": "-"}, "9": {"p": "4-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "1-1", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "1-0", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "2-0", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "1-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "1-2", "cat": "-"}, "23": {"p": "0-0", "cat": "-"}, "24": {"p": "1-1", "cat": "-"}, "25": {"p": "2-1", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "1-0", "cat": "-"}, "28": {"p": "3-0", "cat": "-"}, "29": {"p": "0-0", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "1-0", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "3-1", "cat": "-"}, "35": {"p": "0-1", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "0-2", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "4-0", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "2-1", "cat": "-"}, "42": {"p": "4-0", "cat": "-"}, "43": {"p": "0-1", "cat": "-"}, "44": {"p": "1-0", "cat": "-"}, "45": {"p": "3-0", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "0-4", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "1-0", "cat": "-"}, "52": {"p": "3-1", "cat": "-"}, "53": {"p": "3-1", "cat": "-"}, "54": {"p": "1-2", "cat": "-"}, "55": {"p": "1-0", "cat": "-"}, "56": {"p": "1-1", "cat": "-"}, "57": {"p": "1-3", "cat": "-"}, "58": {"p": "1-2", "cat": "-"}, "59": {"p": "1-1", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "1-2", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-2", "cat": "-"}, "68": {"p": "0-5", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Victor Molinari": {"1": {"p": "2-1", "cat": "B"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "2-1", "cat": "D"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "0-1", "cat": "-"}, "9": {"p": "2-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-1", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "2-0", "cat": "-"}, "15": {"p": "2-0", "cat": "-"}, "16": {"p": "1-2", "cat": "-"}, "17": {"p": "2-1", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "2-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "1-1", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "2-2", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "0-1", "cat": "-"}, "30": {"p": "3-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "2-0", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "2-1", "cat": "-"}, "35": {"p": "1-2", "cat": "-"}, "36": {"p": "1-1", "cat": "-"}, "37": {"p": "0-2", "cat": "-"}, "38": {"p": "1-1", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "1-0", "cat": "-"}, "41": {"p": "1-0", "cat": "-"}, "42": {"p": "2-0", "cat": "-"}, "43": {"p": "0-2", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-1", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "1-1", "cat": "-"}, "49": {"p": "0-2", "cat": "-"}, "50": {"p": "0-1", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "2-1", "cat": "-"}, "53": {"p": "2-0", "cat": "-"}, "54": {"p": "1-1", "cat": "-"}, "55": {"p": "2-1", "cat": "-"}, "56": {"p": "1-1", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "1-2", "cat": "-"}, "59": {"p": "2-1", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-2", "cat": "-"}, "64": {"p": "1-1", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "0-1", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-2", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "1-1", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-2", "cat": "-"}}, "Vitor Passos": {"1": {"p": "1-1", "cat": "D"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "2-0", "cat": "D"}, "4": {"p": "1-2", "cat": "-"}, "5": {"p": "3-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-0", "cat": "C"}, "8": {"p": "1-1", "cat": "-"}, "9": {"p": "3-0", "cat": "-"}, "10": {"p": "2-1", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "3-1", "cat": "-"}, "14": {"p": "1-1", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "1-1", "cat": "-"}, "17": {"p": "3-0", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "3-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "0-2", "cat": "-"}, "25": {"p": "1-2", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "2-0", "cat": "-"}, "28": {"p": "1-1", "cat": "-"}, "29": {"p": "1-1", "cat": "-"}, "30": {"p": "3-1", "cat": "-"}, "31": {"p": "1-2", "cat": "-"}, "32": {"p": "2-1", "cat": "-"}, "33": {"p": "1-1", "cat": "-"}, "34": {"p": "2-3", "cat": "-"}, "35": {"p": "0-1", "cat": "-"}, "36": {"p": "0-3", "cat": "-"}, "37": {"p": "0-0", "cat": "-"}, "38": {"p": "1-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "2-1", "cat": "-"}, "41": {"p": "2-1", "cat": "-"}, "42": {"p": "3-1", "cat": "-"}, "43": {"p": "0-1", "cat": "-"}, "44": {"p": "3-1", "cat": "-"}, "45": {"p": "2-1", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "2-0", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "2-1", "cat": "-"}, "52": {"p": "1-1", "cat": "-"}, "53": {"p": "2-0", "cat": "-"}, "54": {"p": "1-1", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "0-2", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "1-2", "cat": "-"}, "59": {"p": "0-1", "cat": "-"}, "60": {"p": "0-0", "cat": "-"}, "61": {"p": "0-0", "cat": "-"}, "62": {"p": "0-2", "cat": "-"}, "63": {"p": "0-1", "cat": "-"}, "64": {"p": "0-3", "cat": "-"}, "65": {"p": "1-0", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-2", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "1-1", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Rafael Waddington": {"1": {"p": "1-0", "cat": "B"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "2-1", "cat": "D"}, "4": {"p": "2-0", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "1-2", "cat": "-"}, "9": {"p": "3-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "2-0", "cat": "-"}, "14": {"p": "1-0", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "2-0", "cat": "-"}, "18": {"p": "1-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "1-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "2-1", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "1-0", "cat": "-"}, "28": {"p": "1-0", "cat": "-"}, "29": {"p": "1-1", "cat": "-"}, "30": {"p": "3-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "2-0", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "2-1", "cat": "-"}, "35": {"p": "1-2", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "0-1", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "f3-0", "cat": "-"}, "43": {"p": "0-2", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "2-1", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "2-1", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "1-2", "cat": "-"}, "59": {"p": "1-1", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-0", "cat": "-"}, "62": {"p": "0-2", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "1-1", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "0-0", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "João Thole": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "2-1", "cat": "D"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-1", "cat": "-"}, "7": {"p": "3-0", "cat": "C"}, "8": {"p": "1-2", "cat": "-"}, "9": {"p": "5-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-1", "cat": "-"}, "13": {"p": "2-0", "cat": "-"}, "14": {"p": "1-0", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "2-1", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "3-1", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "1-0", "cat": "-"}, "25": {"p": "2-0", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "2-0", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "1-2", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "2-1", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "2-0", "cat": "-"}, "35": {"p": "0-1", "cat": "-"}, "36": {"p": "2-0", "cat": "-"}, "37": {"p": "0-2", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "3-1", "cat": "-"}, "40": {"p": "2-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "0-1", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "1-0", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "1-2", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "1-2", "cat": "-"}, "59": {"p": "2-1", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "1-2", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Felipe Balzana": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "2-1", "cat": "D"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "1-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "0-1", "cat": "-"}, "9": {"p": "3-0", "cat": "-"}, "10": {"p": "2-1", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-1", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "1-1", "cat": "-"}, "15": {"p": "4-0", "cat": "-"}, "16": {"p": "1-3", "cat": "-"}, "17": {"p": "3-1", "cat": "-"}, "18": {"p": "0-1", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "2-1", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "2-0", "cat": "-"}, "25": {"p": "2-0", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "2-1", "cat": "-"}, "29": {"p": "0-2", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "2-0", "cat": "-"}, "32": {"p": "1-1", "cat": "-"}, "33": {"p": "1-0", "cat": "-"}, "34": {"p": "2-1", "cat": "-"}, "35": {"p": "0-2", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "0-1", "cat": "-"}, "38": {"p": "2-1", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "1-2", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "1-1", "cat": "-"}, "44": {"p": "1-0", "cat": "-"}, "45": {"p": "3-0", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "2-1", "cat": "-"}, "49": {"p": "1-1", "cat": "-"}, "50": {"p": "1-2", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "2-1", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "0-1", "cat": "-"}, "55": {"p": "0-1", "cat": "-"}, "56": {"p": "1-1", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "0-2", "cat": "-"}, "59": {"p": "1-0", "cat": "-"}, "60": {"p": "0-1", "cat": "-"}, "61": {"p": "1-0", "cat": "-"}, "62": {"p": "0-2", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "1-2", "cat": "-"}, "65": {"p": "2-1", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-0", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "2-1", "cat": "-"}, "70": {"p": "2-2", "cat": "-"}, "71": {"p": "1-0", "cat": "-"}, "72": {"p": "0-2", "cat": "-"}}, "Guilherme Ribas": {"1": {"p": "2-1", "cat": "B"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "0-0", "cat": "C"}, "4": {"p": "3-2", "cat": "-"}, "5": {"p": "2-3", "cat": "-"}, "6": {"p": "0-3", "cat": "-"}, "7": {"p": "1-1", "cat": "D"}, "8": {"p": "0-1", "cat": "-"}, "9": {"p": "4-1", "cat": "-"}, "10": {"p": "2-2", "cat": "-"}, "11": {"p": "3-2", "cat": "-"}, "12": {"p": "2-0", "cat": "-"}, "13": {"p": "3-1", "cat": "-"}, "14": {"p": "0-0", "cat": "-"}, "15": {"p": "4-1", "cat": "-"}, "16": {"p": "2-2", "cat": "-"}, "17": {"p": "5-1", "cat": "-"}, "18": {"p": "1-3", "cat": "-"}, "19": {"p": "4-0", "cat": "-"}, "20": {"p": "3-2", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "4-3", "cat": "-"}, "24": {"p": "1-1", "cat": "-"}, "25": {"p": "2-2", "cat": "-"}, "26": {"p": "1-2", "cat": "-"}, "27": {"p": "3-1", "cat": "-"}, "28": {"p": "0-2", "cat": "-"}, "29": {"p": "3-2", "cat": "-"}, "30": {"p": "5-2", "cat": "-"}, "31": {"p": "2-2", "cat": "-"}, "32": {"p": "1-3", "cat": "-"}, "33": {"p": "2-1", "cat": "-"}, "34": {"p": "3-2", "cat": "-"}, "35": {"p": "1-2", "cat": "-"}, "36": {"p": "2-3", "cat": "-"}, "37": {"p": "1-2", "cat": "-"}, "38": {"p": "3-0", "cat": "-"}, "39": {"p": "3-2", "cat": "-"}, "40": {"p": "1-0", "cat": "-"}, "41": {"p": "2-0", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "1-0", "cat": "-"}, "44": {"p": "2-0", "cat": "-"}, "45": {"p": "1-1", "cat": "-"}, "46": {"p": "3-1", "cat": "-"}, "47": {"p": "0-3", "cat": "-"}, "48": {"p": "4-1", "cat": "-"}, "49": {"p": "2-4", "cat": "-"}, "50": {"p": "3-2", "cat": "-"}, "51": {"p": "4-1", "cat": "-"}, "52": {"p": "2-3", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "2-3", "cat": "-"}, "55": {"p": "0-0", "cat": "-"}, "56": {"p": "2-2", "cat": "-"}, "57": {"p": "0-0", "cat": "-"}, "58": {"p": "1-1", "cat": "-"}, "59": {"p": "1-3", "cat": "-"}, "60": {"p": "0-0", "cat": "-"}, "61": {"p": "0-0", "cat": "-"}, "62": {"p": "1-2", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "2-1", "cat": "-"}, "65": {"p": "1-1", "cat": "-"}, "66": {"p": "2-2", "cat": "-"}, "67": {"p": "0-2", "cat": "-"}, "68": {"p": "0-1", "cat": "-"}, "69": {"p": "2-2", "cat": "-"}, "70": {"p": "1-0", "cat": "-"}, "71": {"p": "2-0", "cat": "-"}, "72": {"p": "1-3", "cat": "-"}}, "Julia Baars Favilla Nunes": {"1": {"p": "3-1", "cat": "C"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-3", "cat": "-"}, "7": {"p": "1-1", "cat": "D"}, "8": {"p": "1-2", "cat": "-"}, "9": {"p": "7-0", "cat": "-"}, "10": {"p": "2-1", "cat": "-"}, "11": {"p": "3-2", "cat": "-"}, "12": {"p": "2-0", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "3-0", "cat": "-"}, "15": {"p": "6-0", "cat": "-"}, "16": {"p": "1-1", "cat": "-"}, "17": {"p": "3-0", "cat": "-"}, "18": {"p": "1-3", "cat": "-"}, "19": {"p": "3-1", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "4-1", "cat": "-"}, "22": {"p": "1-2", "cat": "-"}, "23": {"p": "3-1", "cat": "-"}, "24": {"p": "3-1", "cat": "-"}, "25": {"p": "2-1", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "1-0", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "1-2", "cat": "-"}, "30": {"p": "5-1", "cat": "-"}, "31": {"p": "2-1", "cat": "-"}, "32": {"p": "2-1", "cat": "-"}, "33": {"p": "3-1", "cat": "-"}, "34": {"p": "3-2", "cat": "-"}, "35": {"p": "1-3", "cat": "-"}, "36": {"p": "2-2", "cat": "-"}, "37": {"p": "0-3", "cat": "-"}, "38": {"p": "2-1", "cat": "-"}, "39": {"p": "1-0", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "1-2", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "1-3", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "4-3", "cat": "-"}, "46": {"p": "4-1", "cat": "-"}, "47": {"p": "0-1", "cat": "-"}, "48": {"p": "1-0", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "2-2", "cat": "-"}, "51": {"p": "0-0", "cat": "-"}, "52": {"p": "2-1", "cat": "-"}, "53": {"p": "4-1", "cat": "-"}, "54": {"p": "1-1", "cat": "-"}, "55": {"p": "1-2", "cat": "-"}, "56": {"p": "3-2", "cat": "-"}, "57": {"p": "1-3", "cat": "-"}, "58": {"p": "0-2", "cat": "-"}, "59": {"p": "3-1", "cat": "-"}, "60": {"p": "0-3", "cat": "-"}, "61": {"p": "4-2", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-4", "cat": "-"}, "64": {"p": "0-1", "cat": "-"}, "65": {"p": "3-1", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "1-2", "cat": "-"}, "70": {"p": "2-2", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-5", "cat": "-"}}, "Rafael Manso": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "0-0", "cat": "D"}, "3": {"p": "2-1", "cat": "D"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-0", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "0-2", "cat": "-"}, "9": {"p": "4-0", "cat": "-"}, "10": {"p": "2-1", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "2-0", "cat": "-"}, "14": {"p": "1-0", "cat": "-"}, "15": {"p": "4-0", "cat": "-"}, "16": {"p": "1-2", "cat": "-"}, "17": {"p": "2-0", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "0-0", "cat": "-"}, "25": {"p": "2-0", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "1-1", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "1-0", "cat": "-"}, "32": {"p": "1-0", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "3-1", "cat": "-"}, "35": {"p": "1-2", "cat": "-"}, "36": {"p": "1-0", "cat": "-"}, "37": {"p": "0-1", "cat": "-"}, "38": {"p": "3-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "0-1", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "3-0", "cat": "-"}, "49": {"p": "0-2", "cat": "-"}, "50": {"p": "2-2", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "1-0", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "1-3", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "2-2", "cat": "-"}, "57": {"p": "1-2", "cat": "-"}, "58": {"p": "0-2", "cat": "-"}, "59": {"p": "2-2", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-0", "cat": "-"}, "62": {"p": "0-4", "cat": "-"}, "63": {"p": "0-0", "cat": "-"}, "64": {"p": "1-3", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "0-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "1-0", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "2-0", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Claudio Laia": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "2-1", "cat": "D"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "0-1", "cat": "-"}, "9": {"p": "3-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "2-0", "cat": "-"}, "14": {"p": "2-1", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "2-0", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "1-3", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "2-0", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "2-0", "cat": "-"}, "28": {"p": "3-1", "cat": "-"}, "29": {"p": "1-2", "cat": "-"}, "30": {"p": "3-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "2-0", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "3-1", "cat": "-"}, "35": {"p": "1-2", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "0-2", "cat": "-"}, "38": {"p": "3-1", "cat": "-"}, "39": {"p": "3-0", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "1-2", "cat": "-"}, "44": {"p": "3-1", "cat": "-"}, "45": {"p": "2-1", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "3-1", "cat": "-"}, "49": {"p": "1-1", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "2-1", "cat": "-"}, "53": {"p": "2-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "2-0", "cat": "-"}, "56": {"p": "1-1", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "0-2", "cat": "-"}, "59": {"p": "1-2", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "1-3", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Baraldi": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "1-1", "cat": "-"}, "6": {"p": "0-1", "cat": "-"}, "7": {"p": "2-0", "cat": "C"}, "8": {"p": "1-1", "cat": "-"}, "9": {"p": "5-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "3-0", "cat": "-"}, "14": {"p": "2-0", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "4-0", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "2-0", "cat": "-"}, "22": {"p": "0-1", "cat": "-"}, "23": {"p": "3-1", "cat": "-"}, "24": {"p": "2-0", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "2-0", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "0-1", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "2-1", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "2-0", "cat": "-"}, "35": {"p": "0-1", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "0-1", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "5-0", "cat": "-"}, "43": {"p": "0-2", "cat": "-"}, "44": {"p": "2-0", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "4-0", "cat": "-"}, "47": {"p": "2-0", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "0-1", "cat": "-"}, "50": {"p": "0-1", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "1-0", "cat": "-"}, "53": {"p": "2-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "0-2", "cat": "-"}, "57": {"p": "0-1", "cat": "-"}, "58": {"p": "0-2", "cat": "-"}, "59": {"p": "2-1", "cat": "-"}, "60": {"p": "1-3", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "0-1", "cat": "-"}, "64": {"p": "1-1", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "0-3", "cat": "-"}, "67": {"p": "0-1", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "1-0", "cat": "-"}, "70": {"p": "1-1", "cat": "-"}, "71": {"p": "1-0", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Marina Jordão": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "0-2", "cat": "D"}, "3": {"p": "2-0", "cat": "D"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-0", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-0", "cat": "C"}, "8": {"p": "0-2", "cat": "-"}, "9": {"p": "2-0", "cat": "-"}, "10": {"p": "0-2", "cat": "-"}, "11": {"p": "2-0", "cat": "-"}, "12": {"p": "2-0", "cat": "-"}, "13": {"p": "2-0", "cat": "-"}, "14": {"p": "2-0", "cat": "-"}, "15": {"p": "2-0", "cat": "-"}, "16": {"p": "0-2", "cat": "-"}, "17": {"p": "2-0", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "2-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-0", "cat": "-"}, "24": {"p": "2-0", "cat": "-"}, "25": {"p": "0-2", "cat": "-"}, "26": {"p": "2-0", "cat": "-"}, "27": {"p": "2-0", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "0-2", "cat": "-"}, "30": {"p": "2-0", "cat": "-"}, "31": {"p": "2-0", "cat": "-"}, "32": {"p": "2-0", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "2-0", "cat": "-"}, "35": {"p": "0-2", "cat": "-"}, "36": {"p": "2-0", "cat": "-"}, "37": {"p": "0-2", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "2-0", "cat": "-"}, "41": {"p": "2-0", "cat": "-"}, "42": {"p": "2-0", "cat": "-"}, "43": {"p": "0-2", "cat": "-"}, "44": {"p": "2-0", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "0-2", "cat": "-"}, "50": {"p": "0-2", "cat": "-"}, "51": {"p": "2-0", "cat": "-"}, "52": {"p": "0-2", "cat": "-"}, "53": {"p": "2-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "0-2", "cat": "-"}, "56": {"p": "0-2", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "0-2", "cat": "-"}, "59": {"p": "2-0", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "2-0", "cat": "-"}, "62": {"p": "0-2", "cat": "-"}, "63": {"p": "0-2", "cat": "-"}, "64": {"p": "0-2", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "0-2", "cat": "-"}, "67": {"p": "0-2", "cat": "-"}, "68": {"p": "0-2", "cat": "-"}, "69": {"p": "0-2", "cat": "-"}, "70": {"p": "0-2", "cat": "-"}, "71": {"p": "2-0", "cat": "-"}, "72": {"p": "0-2", "cat": "-"}}, "Sabrina Sobral": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "1-2", "cat": "-"}, "9": {"p": "3-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "2-0", "cat": "-"}, "15": {"p": "2-0", "cat": "-"}, "16": {"p": "1-2", "cat": "-"}, "17": {"p": "2-1", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "3-1", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "2-0", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "1-1", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "2-0", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "2-1", "cat": "-"}, "35": {"p": "0-2", "cat": "-"}, "36": {"p": "1-1", "cat": "-"}, "37": {"p": "0-2", "cat": "-"}, "38": {"p": "1-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "3-1", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "1-2", "cat": "-"}, "44": {"p": "1-0", "cat": "-"}, "45": {"p": "2-1", "cat": "-"}, "46": {"p": "1-1", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "1-1", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "2-1", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "1-1", "cat": "-"}, "57": {"p": "1-2", "cat": "-"}, "58": {"p": "0-2", "cat": "-"}, "59": {"p": "1-1", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "1-1", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-1", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-2", "cat": "-"}, "69": {"p": "0-1", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "1-1", "cat": "-"}, "72": {"p": "2-0", "cat": "-"}}, "Marcelo Luis de F. Scalzitti": {"1": {"p": "2-1", "cat": "B"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "1-0", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "1-1", "cat": "D"}, "8": {"p": "1-1", "cat": "-"}, "9": {"p": "4-0", "cat": "-"}, "10": {"p": "1-3", "cat": "-"}, "11": {"p": "1-1", "cat": "-"}, "12": {"p": "1-2", "cat": "-"}, "13": {"p": "1-2", "cat": "-"}, "14": {"p": "2-1", "cat": "-"}, "15": {"p": "2-0", "cat": "-"}, "16": {"p": "1-2", "cat": "-"}, "17": {"p": "2-0", "cat": "-"}, "18": {"p": "0-3", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "2-1", "cat": "-"}, "21": {"p": "3-1", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "1-1", "cat": "-"}, "24": {"p": "2-1", "cat": "-"}, "25": {"p": "2-2", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "1-0", "cat": "-"}, "28": {"p": "1-0", "cat": "-"}, "29": {"p": "0-2", "cat": "-"}, "30": {"p": "5-0", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "1-1", "cat": "-"}, "33": {"p": "3-0", "cat": "-"}, "34": {"p": "2-2", "cat": "-"}, "35": {"p": "1-3", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "0-2", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "2-1", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "2-2", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "1-2", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "2-1", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "1-3", "cat": "-"}, "48": {"p": "2-1", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "0-1", "cat": "-"}, "51": {"p": "1-0", "cat": "-"}, "52": {"p": "2-0", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "1-3", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "1-2", "cat": "-"}, "57": {"p": "0-4", "cat": "-"}, "58": {"p": "1-2", "cat": "-"}, "59": {"p": "1-1", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "2-0", "cat": "-"}, "62": {"p": "1-3", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "1-3", "cat": "-"}, "65": {"p": "3-0", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "1-3", "cat": "-"}, "69": {"p": "1-0", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "1-1", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Alexandre Rosé": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "0-0", "cat": "C"}, "4": {"p": "0-3", "cat": "-"}, "5": {"p": "1-0", "cat": "-"}, "6": {"p": "1-2", "cat": "-"}, "7": {"p": "1-2", "cat": "D"}, "8": {"p": "1-2", "cat": "-"}, "9": {"p": "5-0", "cat": "-"}, "10": {"p": "2-2", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "1-0", "cat": "-"}, "15": {"p": "5-1", "cat": "-"}, "16": {"p": "0-1", "cat": "-"}, "17": {"p": "3-0", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "1-0", "cat": "-"}, "21": {"p": "2-0", "cat": "-"}, "22": {"p": "1-2", "cat": "-"}, "23": {"p": "1-1", "cat": "-"}, "24": {"p": "2-0", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "1-1", "cat": "-"}, "29": {"p": "1-2", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "2-0", "cat": "-"}, "32": {"p": "1-2", "cat": "-"}, "33": {"p": "3-0", "cat": "-"}, "34": {"p": "2-1", "cat": "-"}, "35": {"p": "1-1", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "1-2", "cat": "-"}, "38": {"p": "2-1", "cat": "-"}, "39": {"p": "2-1", "cat": "-"}, "40": {"p": "2-0", "cat": "-"}, "41": {"p": "1-2", "cat": "-"}, "42": {"p": "4-0", "cat": "-"}, "43": {"p": "1-1", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "3-1", "cat": "-"}, "46": {"p": "2-1", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "1-0", "cat": "-"}, "49": {"p": "1-0", "cat": "-"}, "50": {"p": "2-1", "cat": "-"}, "51": {"p": "2-1", "cat": "-"}, "52": {"p": "1-0", "cat": "-"}, "53": {"p": "2-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "2-1", "cat": "-"}, "56": {"p": "0-1", "cat": "-"}, "57": {"p": "1-3", "cat": "-"}, "58": {"p": "1-3", "cat": "-"}, "59": {"p": "1-0", "cat": "-"}, "60": {"p": "1-3", "cat": "-"}, "61": {"p": "2-1", "cat": "-"}, "62": {"p": "1-4", "cat": "-"}, "63": {"p": "0-1", "cat": "-"}, "64": {"p": "1-2", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "1-3", "cat": "-"}, "69": {"p": "0-0", "cat": "-"}, "70": {"p": "1-2", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "1-3", "cat": "-"}}, "Eduardo Marra": {"1": {"p": "2-1", "cat": "B"}, "2": {"p": "0-1", "cat": "D"}, "3": {"p": "2-0", "cat": "D"}, "4": {"p": "0-0", "cat": "-"}, "5": {"p": "1-0", "cat": "-"}, "6": {"p": "1-0", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "0-0", "cat": "-"}, "9": {"p": "3-0", "cat": "-"}, "10": {"p": "1-0", "cat": "-"}, "11": {"p": "2-0", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "3-1", "cat": "-"}, "14": {"p": "0-0", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "0-1", "cat": "-"}, "17": {"p": "1-0", "cat": "-"}, "18": {"p": "1-2", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "0-0", "cat": "-"}, "21": {"p": "2-0", "cat": "-"}, "22": {"p": "0-1", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "0-0", "cat": "-"}, "25": {"p": "1-0", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "1-0", "cat": "-"}, "28": {"p": "1-0", "cat": "-"}, "29": {"p": "0-1", "cat": "-"}, "30": {"p": "2-1", "cat": "-"}, "31": {"p": "1-0", "cat": "-"}, "32": {"p": "2-0", "cat": "-"}, "33": {"p": "2-1", "cat": "-"}, "34": {"p": "2-0", "cat": "-"}, "35": {"p": "0-1", "cat": "-"}, "36": {"p": "2-2", "cat": "-"}, "37": {"p": "0-2", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "2-0", "cat": "-"}, "41": {"p": "1-0", "cat": "-"}, "42": {"p": "1-0", "cat": "-"}, "43": {"p": "0-0", "cat": "-"}, "44": {"p": "0-0", "cat": "-"}, "45": {"p": "1-0", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "0-1", "cat": "-"}, "48": {"p": "2-1", "cat": "-"}, "49": {"p": "0-0", "cat": "-"}, "50": {"p": "0-1", "cat": "-"}, "51": {"p": "1-2", "cat": "-"}, "52": {"p": "1-1", "cat": "-"}, "53": {"p": "2-1", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "0-1", "cat": "-"}, "56": {"p": "0-1", "cat": "-"}, "57": {"p": "2-0", "cat": "-"}, "58": {"p": "1-1", "cat": "-"}, "59": {"p": "1-0", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-0", "cat": "-"}, "62": {"p": "1-1", "cat": "-"}, "63": {"p": "0-2", "cat": "-"}, "64": {"p": "1-2", "cat": "-"}, "65": {"p": "1-0", "cat": "-"}, "66": {"p": "2-3", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "0-0", "cat": "-"}, "70": {"p": "2-2", "cat": "-"}, "71": {"p": "2-2", "cat": "-"}, "72": {"p": "0-1", "cat": "-"}}, "Isaac Costa": {"1": {"p": "1-0", "cat": "B"}, "2": {"p": "0-1", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "0-2", "cat": "-"}, "5": {"p": "2-0", "cat": "-"}, "6": {"p": "0-1", "cat": "-"}, "7": {"p": "1-1", "cat": "D"}, "8": {"p": "1-1", "cat": "-"}, "9": {"p": "4-0", "cat": "-"}, "10": {"p": "0-1", "cat": "-"}, "11": {"p": "0-0", "cat": "-"}, "12": {"p": "2-1", "cat": "-"}, "13": {"p": "3-1", "cat": "-"}, "14": {"p": "1-0", "cat": "-"}, "15": {"p": "5-0", "cat": "-"}, "16": {"p": "1-0", "cat": "-"}, "17": {"p": "2-0", "cat": "-"}, "18": {"p": "0-3", "cat": "-"}, "19": {"p": "0-0", "cat": "-"}, "20": {"p": "1-0", "cat": "-"}, "21": {"p": "3-0", "cat": "-"}, "22": {"p": "0-1", "cat": "-"}, "23": {"p": "2-0", "cat": "-"}, "24": {"p": "3-0", "cat": "-"}, "25": {"p": "0-0", "cat": "-"}, "26": {"p": "1-1", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "2-0", "cat": "-"}, "29": {"p": "2-2", "cat": "-"}, "30": {"p": "4-0", "cat": "-"}, "31": {"p": "1-0", "cat": "-"}, "32": {"p": "2-2", "cat": "-"}, "33": {"p": "2-0", "cat": "-"}, "34": {"p": "2-1", "cat": "-"}, "35": {"p": "0-1", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "0-1", "cat": "-"}, "38": {"p": "2-1", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "2-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "1-2", "cat": "-"}, "44": {"p": "1-1", "cat": "-"}, "45": {"p": "2-0", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "1-4", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "1-1", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "1-1", "cat": "-"}, "52": {"p": "2-1", "cat": "-"}, "53": {"p": "2-0", "cat": "-"}, "54": {"p": "1-1", "cat": "-"}, "55": {"p": "0-0", "cat": "-"}, "56": {"p": "2-1", "cat": "-"}, "57": {"p": "0-1", "cat": "-"}, "58": {"p": "0-0", "cat": "-"}, "59": {"p": "1-1", "cat": "-"}, "60": {"p": "1-3", "cat": "-"}, "61": {"p": "1-1", "cat": "-"}, "62": {"p": "0-2", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "1-1", "cat": "-"}, "65": {"p": "1-0", "cat": "-"}, "66": {"p": "0-1", "cat": "-"}, "67": {"p": "2-2", "cat": "-"}, "68": {"p": "0-2", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "0-1", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Kamila Nogueira": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "1-3", "cat": "-"}, "5": {"p": "3-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "1-2", "cat": "-"}, "9": {"p": "4-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "3-1", "cat": "-"}, "12": {"p": "3-1", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "2-1", "cat": "-"}, "15": {"p": "3-0", "cat": "-"}, "16": {"p": "0-3", "cat": "-"}, "17": {"p": "2-1", "cat": "-"}, "18": {"p": "0-2", "cat": "-"}, "19": {"p": "3-1", "cat": "-"}, "20": {"p": "2-0", "cat": "-"}, "21": {"p": "3-1", "cat": "-"}, "22": {"p": "0-3", "cat": "-"}, "23": {"p": "1-1", "cat": "-"}, "24": {"p": "1-0", "cat": "-"}, "25": {"p": "1-1", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "2-0", "cat": "-"}, "28": {"p": "2-1", "cat": "-"}, "29": {"p": "0-1", "cat": "-"}, "30": {"p": "4-1", "cat": "-"}, "31": {"p": "1-1", "cat": "-"}, "32": {"p": "3-0", "cat": "-"}, "33": {"p": "3-0", "cat": "-"}, "34": {"p": "3-1", "cat": "-"}, "35": {"p": "0-2", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "0-1", "cat": "-"}, "38": {"p": "2-0", "cat": "-"}, "39": {"p": "3-1", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "1-1", "cat": "-"}, "42": {"p": "3-0", "cat": "-"}, "43": {"p": "0-1", "cat": "-"}, "44": {"p": "2-1", "cat": "-"}, "45": {"p": "1-0", "cat": "-"}, "46": {"p": "3-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "0-1", "cat": "-"}, "50": {"p": "0-3", "cat": "-"}, "51": {"p": "2-2", "cat": "-"}, "52": {"p": "1-1", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "1-3", "cat": "-"}, "55": {"p": "2-1", "cat": "-"}, "56": {"p": "1-1", "cat": "-"}, "57": {"p": "0-2", "cat": "-"}, "58": {"p": "2-3", "cat": "-"}, "59": {"p": "2-1", "cat": "-"}, "60": {"p": "0-3", "cat": "-"}, "61": {"p": "2-1", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "2-3", "cat": "-"}, "65": {"p": "3-0", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "1-1", "cat": "-"}, "68": {"p": "0-3", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "1-1", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-3", "cat": "-"}}, "Pedro Lobo": {"1": {"p": "2-0", "cat": "A"}, "2": {"p": "1-1", "cat": "D"}, "3": {"p": "1-1", "cat": "A"}, "4": {"p": "0-3", "cat": "-"}, "5": {"p": "2-1", "cat": "-"}, "6": {"p": "0-2", "cat": "-"}, "7": {"p": "2-1", "cat": "B"}, "8": {"p": "0-2", "cat": "-"}, "9": {"p": "5-0", "cat": "-"}, "10": {"p": "1-1", "cat": "-"}, "11": {"p": "2-1", "cat": "-"}, "12": {"p": "1-0", "cat": "-"}, "13": {"p": "2-1", "cat": "-"}, "14": {"p": "1-1", "cat": "-"}, "15": {"p": "4-0", "cat": "-"}, "16": {"p": "1-2", "cat": "-"}, "17": {"p": "3-1", "cat": "-"}, "18": {"p": "0-3", "cat": "-"}, "19": {"p": "2-0", "cat": "-"}, "20": {"p": "3-0", "cat": "-"}, "21": {"p": "1-0", "cat": "-"}, "22": {"p": "0-2", "cat": "-"}, "23": {"p": "2-1", "cat": "-"}, "24": {"p": "1-1", "cat": "-"}, "25": {"p": "2-1", "cat": "-"}, "26": {"p": "2-1", "cat": "-"}, "27": {"p": "2-1", "cat": "-"}, "28": {"p": "3-0", "cat": "-"}, "29": {"p": "1-1", "cat": "-"}, "30": {"p": "5-0", "cat": "-"}, "31": {"p": "1-0", "cat": "-"}, "32": {"p": "2-1", "cat": "-"}, "33": {"p": "3-0", "cat": "-"}, "34": {"p": "2-1", "cat": "-"}, "35": {"p": "0-2", "cat": "-"}, "36": {"p": "2-1", "cat": "-"}, "37": {"p": "1-2", "cat": "-"}, "38": {"p": "3-0", "cat": "-"}, "39": {"p": "2-0", "cat": "-"}, "40": {"p": "3-0", "cat": "-"}, "41": {"p": "2-1", "cat": "-"}, "42": {"p": "4-0", "cat": "-"}, "43": {"p": "1-2", "cat": "-"}, "44": {"p": "1-1", "cat": "-"}, "45": {"p": "2-1", "cat": "-"}, "46": {"p": "2-0", "cat": "-"}, "47": {"p": "0-2", "cat": "-"}, "48": {"p": "2-0", "cat": "-"}, "49": {"p": "1-2", "cat": "-"}, "50": {"p": "1-1", "cat": "-"}, "51": {"p": "2-2", "cat": "-"}, "52": {"p": "2-0", "cat": "-"}, "53": {"p": "3-0", "cat": "-"}, "54": {"p": "0-2", "cat": "-"}, "55": {"p": "1-1", "cat": "-"}, "56": {"p": "2-1", "cat": "-"}, "57": {"p": "0-3", "cat": "-"}, "58": {"p": "0-1", "cat": "-"}, "59": {"p": "1-1", "cat": "-"}, "60": {"p": "0-2", "cat": "-"}, "61": {"p": "1-0", "cat": "-"}, "62": {"p": "0-3", "cat": "-"}, "63": {"p": "1-1", "cat": "-"}, "64": {"p": "1-2", "cat": "-"}, "65": {"p": "2-0", "cat": "-"}, "66": {"p": "1-2", "cat": "-"}, "67": {"p": "0-2", "cat": "-"}, "68": {"p": "0-4", "cat": "-"}, "69": {"p": "1-1", "cat": "-"}, "70": {"p": "1-1", "cat": "-"}, "71": {"p": "2-1", "cat": "-"}, "72": {"p": "0-4", "cat": "-"}}};
+const NOMES   = ["Pedro Lobo", "Kamila Nogueira", "Sabrina Sobral", "Gabriel Queiroz", "Baraldi", "Victor Manso", "Thiago Almeida", "Thiago Navega", "Antonio Veiga", "Thamires Garcez", "Alessandra Couto", "Guilherme Mattoso", "Arthur Mascarenhas", "Isaac Costa", "Marcelo Luis de F. Scalzitti", "ALINE RODRIGUEZ BARBOSA", "Claudio Laia", "Rafael Manso", "Felipe Balzana", "Bruna Moreira", "Alexandre Rosé", "Marina Jordão", "Julia Baars Favilla Nunes", "João Thole", "Rafael Waddington", "Carolina Moraes", "Victor Molinari", "Eduardo Marra", "Carla Bastos", "Eduardo Thole", "Julio Vieira", "Guilherme Ribas", "Rodrigo Mota", "Vitor Passos"];
+const RANKING = [{"Nome":"Pedro Lobo","Points":65,"A":2,"B":1,"C":0,"D":1},{"Nome":"Kamila Nogueira","Points":65,"A":2,"B":1,"C":0,"D":1},{"Nome":"Sabrina Sobral","Points":65,"A":2,"B":1,"C":0,"D":1},{"Nome":"Gabriel Queiroz","Points":65,"A":2,"B":1,"C":0,"D":1},{"Nome":"Baraldi","Points":60,"A":2,"B":0,"C":1,"D":1},{"Nome":"Victor Manso","Points":60,"A":2,"B":0,"C":1,"D":1},{"Nome":"Thiago Almeida","Points":60,"A":2,"B":0,"C":1,"D":1},{"Nome":"Thiago Navega","Points":55,"A":1,"B":2,"C":0,"D":1},{"Nome":"Antonio Veiga","Points":55,"A":1,"B":2,"C":0,"D":1},{"Nome":"Thamires Garcez","Points":50,"A":1,"B":1,"C":1,"D":1},{"Nome":"Alessandra Couto","Points":50,"A":1,"B":1,"C":1,"D":1},{"Nome":"Guilherme Mattoso","Points":50,"A":2,"B":0,"C":0,"D":2},{"Nome":"Arthur Mascarenhas","Points":50,"A":1,"B":1,"C":1,"D":1},{"Nome":"Isaac Costa","Points":40,"A":1,"B":1,"C":0,"D":2},{"Nome":"Marcelo Luis de F. Scalzitti","Points":40,"A":1,"B":1,"C":0,"D":2},{"Nome":"ALINE RODRIGUEZ BARBOSA","Points":40,"A":1,"B":1,"C":0,"D":2},{"Nome":"Claudio Laia","Points":40,"A":1,"B":1,"C":0,"D":2},{"Nome":"Rafael Manso","Points":40,"A":1,"B":1,"C":0,"D":2},{"Nome":"Felipe Balzana","Points":40,"A":1,"B":1,"C":0,"D":2},{"Nome":"Bruna Moreira","Points":40,"A":1,"B":1,"C":0,"D":2},{"Nome":"Alexandre Rosé","Points":35,"A":1,"B":0,"C":1,"D":2},{"Nome":"Marina Jordão","Points":35,"A":1,"B":0,"C":1,"D":2},{"Nome":"Julia Baars Favilla Nunes","Points":35,"A":1,"B":0,"C":1,"D":2},{"Nome":"João Thole","Points":35,"A":1,"B":0,"C":1,"D":2},{"Nome":"Rafael Waddington","Points":30,"A":0,"B":2,"C":0,"D":2},{"Nome":"Carolina Moraes","Points":30,"A":0,"B":2,"C":0,"D":2},{"Nome":"Victor Molinari","Points":30,"A":0,"B":2,"C":0,"D":2},{"Nome":"Eduardo Marra","Points":30,"A":0,"B":2,"C":0,"D":2},{"Nome":"Carla Bastos","Points":25,"A":1,"B":0,"C":0,"D":3},{"Nome":"Eduardo Thole","Points":25,"A":0,"B":1,"C":1,"D":2},{"Nome":"Julio Vieira","Points":25,"A":1,"B":0,"C":0,"D":3},{"Nome":"Guilherme Ribas","Points":25,"A":0,"B":1,"C":1,"D":2},{"Nome":"Rodrigo Mota","Points":15,"A":0,"B":1,"C":0,"D":3},{"Nome":"Vitor Passos","Points":10,"A":0,"B":0,"C":1,"D":3}];
+
+// ── TABS ──
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  el.classList.add('active');
+  if (id === 'palpites') renderPalpites();
+}
+
+// ── RANKING ──
+const medalha = p => p===1?'🥇':p===2?'🥈':p===3?'🥉':p+'º';
+const rb = document.getElementById('rankingBody');
+RANKING.forEach((r,i) => {
+  const pos=i+1, cl=pos<=3?`p${pos}`:'';
+  rb.innerHTML += `<tr class="${cl}">
+    <td style="font-weight:700">${medalha(pos)}</td>
+    <td class="left">${r.Nome}</td>
+    <td class="pts">${r.Points} pts</td>
+    <td><span class="badge bA">${r.A}</span></td>
+    <td><span class="badge bB">${r.B}</span></td>
+    <td><span class="badge bC">${r.C}</span></td>
+    <td><span class="badge bD">${r.D}</span></td>
+  </tr>`;
+});
+function filtrarRanking() {
+  const v = document.getElementById('searchRanking').value.toUpperCase();
+  document.querySelectorAll('#rankingTable tbody tr').forEach(tr => {
+    tr.style.display = tr.cells[1].textContent.toUpperCase().includes(v) ? '' : 'none';
+  });
+}
+
+// ── PALPITES (jogos = linhas, pessoas = colunas) ──
+function renderPalpites() {
+  const filtro = document.getElementById('jogoFiltro').value;
+  const jogosVisiveis = Object.keys(JOGOS).map(Number).filter(jn =>
+    filtro === 'todos' || (GABARITO[jn] !== null && GABARITO[jn] !== undefined)
+  );
+
+  // Cabeçalho: "Jogo" + "Resultado Real" + um th por pessoa
+  const head = document.getElementById('ptHead');
+  head.innerHTML = '<tr>' +
+    '<th class="nome-th">Jogo</th>' +
+    '<th style="background:#2a4a7f;min-width:90px">Resultado Real</th>' +
+    NOMES.map(n => `<th style="min-width:80px">${n}</th>`).join('') +
+    '</tr>';
+
+  // Corpo: uma linha por jogo
+  const body = document.getElementById('ptBody');
+  body.innerHTML = '';
+  jogosVisiveis.forEach(jn => {
+    const gab = GABARITO[jn];
+    let row = `<tr>`;
+    row += `<td class="jogo-col"><span style="color:#9ca3af;font-size:10px;margin-right:4px">J${jn}</span>${JOGOS[jn]}</td>`;
+    row += `<td class="resultado-real">${gab ?? '—'}</td>`;
+    NOMES.forEach(nome => {
+      const d = (PALPITES[nome] || {})[jn];
+      if (!d || !d.p) { row += `<td class="cX">—</td>`; return; }
+      const cl = d.cat === '-' ? 'cX' : `c${d.cat}`;
+      row += `<td class="${cl}">${d.p}</td>`;
+    });
+    row += '</tr>';
+    body.innerHTML += row;
+  });
+}
+
+function filtrarPalpites() {
+  const v = document.getElementById('searchPalpites').value.toUpperCase();
+  if (!v) {
+    // Mostrar todas as colunas
+    document.querySelectorAll('#pt thead th, #pt tbody td').forEach(el => el.style.display = '');
+    return;
   }
+  // Encontrar índices das colunas que batem com o nome (col 0 = jogo, col 1 = gabarito, col 2+ = pessoas)
+  const ths = document.querySelectorAll('#pt thead tr th');
+  const visivel = [true, true];  // jogo e gabarito sempre visíveis
+  NOMES.forEach((n, i) => visivel.push(n.toUpperCase().includes(v)));
+  ths.forEach((th, i) => th.style.display = visivel[i] ? '' : 'none');
+  document.querySelectorAll('#pt tbody tr').forEach(tr => {
+    tr.querySelectorAll('td').forEach((td, i) => td.style.display = visivel[i] ? '' : 'none');
+  });
 }
 </script>
 </body>
